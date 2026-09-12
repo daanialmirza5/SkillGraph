@@ -1,8 +1,13 @@
+from typing import TYPE_CHECKING
+
 from sqlalchemy import Enum, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
 from app.models.enums import Importance
+
+if TYPE_CHECKING:
+    from app.models.skill import Skill
 
 
 class Role(Base):
@@ -25,5 +30,5 @@ class RoleSkill(Base):
     importance: Mapped[Importance] = mapped_column(Enum(Importance), nullable=False)
     min_capability_score: Mapped[int] = mapped_column(Integer, default=40)  # 0-100 threshold
 
-    skill: Mapped["Skill"] = relationship()  # noqa: F821
+    skill: Mapped["Skill"] = relationship()
     role: Mapped["Role"] = relationship()

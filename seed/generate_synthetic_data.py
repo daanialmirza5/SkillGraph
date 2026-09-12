@@ -13,7 +13,12 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "apps" / "api"))
+# Local checkout layout: seed/ and apps/api/ are siblings. In the Docker image the
+# two are flattened into the same directory, where `app` is already importable
+# via PYTHONPATH, so only add the path if it actually exists.
+_local_api_path = Path(__file__).resolve().parent.parent / "apps" / "api"
+if _local_api_path.exists():
+    sys.path.insert(0, str(_local_api_path))
 
 from app.core.database import Base, SessionLocal, engine  # noqa: E402
 from app.core.security import hash_password  # noqa: E402

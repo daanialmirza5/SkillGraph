@@ -1,10 +1,14 @@
 from datetime import date, datetime, timezone
+from typing import TYPE_CHECKING
 
 from sqlalchemy import Date, DateTime, Enum, ForeignKey, Integer, JSON, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
 from app.models.enums import EvidenceType, VerificationStatus
+
+if TYPE_CHECKING:
+    from app.models.skill import Skill
 
 
 class Project(Base):
@@ -27,7 +31,7 @@ class Project(Base):
     completed_on: Mapped[date | None] = mapped_column(Date, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
-    skills: Mapped[list["Skill"]] = relationship(secondary="project_skills")  # noqa: F821
+    skills: Mapped[list["Skill"]] = relationship(secondary="project_skills")
 
 
 class ProjectSkill(Base):
@@ -55,5 +59,5 @@ class Evidence(Base):
     complexity: Mapped[int] = mapped_column(Integer, default=3)  # 1-5
     project_id: Mapped[int | None] = mapped_column(ForeignKey("projects.id"), nullable=True)
 
-    skill: Mapped["Skill"] = relationship()  # noqa: F821
+    skill: Mapped["Skill"] = relationship()
     project: Mapped["Project | None"] = relationship()

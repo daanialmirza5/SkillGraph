@@ -1,0 +1,45 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://skillgraph:skillgraph@db:5432/skillgraph
+      CORS_ORIGINS: '["http://localhost:3000"]'
+      AI_PROVIDER: mock
+      SEED_ON_START: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: skillgraph
+      POSTGRES_PASSWORD: skillgraph
+      POSTGRES_DB: skillgraph
+    ports:
+      - "5432:5432"
+    volumes:
+      - skillgraph_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U skillgraph"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  skillgraph_pgdata:

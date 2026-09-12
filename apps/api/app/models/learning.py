@@ -1,10 +1,15 @@
 from datetime import datetime, timezone
+from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, Enum, ForeignKey, Integer, JSON, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base
 from app.models.enums import LearningResourceType
+
+if TYPE_CHECKING:
+    from app.models.role import Role
+    from app.models.skill import Skill
 
 
 class LearningResource(Base):
@@ -19,7 +24,7 @@ class LearningResource(Base):
     produces_evidence_type: Mapped[str] = mapped_column(String(64), default="COURSE")
     estimated_hours: Mapped[int] = mapped_column(Integer, default=10)
 
-    skill: Mapped["Skill"] = relationship()  # noqa: F821
+    skill: Mapped["Skill"] = relationship()
 
 
 class AssessmentQuestion(Base):
@@ -34,7 +39,7 @@ class AssessmentQuestion(Base):
     correct_answer: Mapped[str] = mapped_column(String(255), nullable=False)
     explanation: Mapped[str | None] = mapped_column(Text, nullable=True)
 
-    skill: Mapped["Skill"] = relationship()  # noqa: F821
+    skill: Mapped["Skill"] = relationship()
 
 
 class AssessmentAttempt(Base):
@@ -49,7 +54,7 @@ class AssessmentAttempt(Base):
     became_evidence: Mapped[bool] = mapped_column(default=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
-    skill: Mapped["Skill"] = relationship()  # noqa: F821
+    skill: Mapped["Skill"] = relationship()
 
 
 class CareerGoal(Base):
@@ -63,7 +68,7 @@ class CareerGoal(Base):
     baseline_readiness: Mapped[float | None] = mapped_column(nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
 
-    target_role: Mapped["Role"] = relationship()  # noqa: F821
+    target_role: Mapped["Role"] = relationship()
 
 
 class Recommendation(Base):
