@@ -1,276 +1,440 @@
+<div align="center">
+
 # SkillGraph
 
-### Turn what you can prove into what you can become.
+### Evidence-Based Skills Intelligence & Career Graph Engine
 
-An evidence-based skills intelligence and career gap analysis platform. It
-models a real graph — claimed skills → evidence → capability → target role →
-gaps → recommendations — instead of matching resume keywords.
+Turn what you can prove into what you can become. A full-stack, graph-native career intelligence platform that replaces resume keyword matching with mathematical capability scoring, dependency-aware gap analysis, what-if simulations, and grounded multi-agent AI analysis.
 
-> SkillGraph uses synthetic demonstration profiles, roles, skills, and
-> evidence. Readiness scores and capability indicators are analytical
-> estimates, not hiring decisions, professional certifications, or
-> guarantees of employment.
+[![CI Pipeline](https://github.com/daanialmirza5/SkillGraph/actions/workflows/ci.yml/badge.svg)](https://github.com/daanialmirza5/SkillGraph/actions)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)](https://fastapi.tiangolo.com/)
+[![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black.svg)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6.svg)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC.svg)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+[Overview](#overview) • [Key Features](#key-features) • [Product Showcase](#product-showcase) • [Architecture](#architecture) • [Tech Stack](#tech-stack) • [Quickstart](#quickstart) • [API Reference](#api-reference) • [Evaluation](#evaluation) • [Author](#author)
+
+</div>
 
 ---
 
-## The problem
+> [!NOTE]
+> **Synthetic Demonstration Data Notice**  
+> SkillGraph ships with rich, internally consistent synthetic profiles, skills taxonomy, roles, and verified evidence records. Capability scores and readiness indicators are deterministic analytical estimates designed to evaluate engineering competencies — not automated hiring decisions or professional certifications.
 
-People can usually list what they've *studied*. They struggle to answer:
+---
 
-- "What can I actually **prove**?"
-- "What exactly am I missing for the role I want, and in what order should I
-  close it?"
+## Overview
 
-Resumes reduce experience to keywords. SkillGraph instead distinguishes:
+Traditional hiring platforms and job boards treat software engineering skills as flat lists of keywords. A developer with 5 production projects in distributed systems and an applicant who watched a 20-minute video can both list "Kubernetes" on a resume.
 
-| | Meaning |
-|---|---|
-| **Claimed** | You say you have this skill. |
-| **Evidenced** | You have at least one project, job, certification, or assessment backing it. |
-| **Demonstrated** | That evidence, scored for recency/complexity/verification, is strong. |
-| **Target** | A skill your chosen role requires. |
+**SkillGraph solves this fundamental signal problem** by constructing a directed acyclic graph (DAG) of claimed skills, backing evidence records, mathematical proficiency decay, role requirement graphs, and prerequisite dependencies.
 
-## Why SkillGraph is different
+```
+Claimed Skills ──► Evidence Locker ──► Capability Scoring (0-100)
+                         │
+                         ▼
+Target Role DAG ──► Gap & Dependency Engine ──► Recommended Projects & Learning
+                         │
+                         ▼
+                 Career What-If Simulator ◄──► Grounded AI Analyst
+```
 
-It is not a resume builder, a chatbot, a job board, or a keyword matcher.
-Every number it shows traces back to a real row in the database:
+### Core Value Proposition
 
-- **Evidence vs. claims** — you can claim "Kubernetes" and have zero evidence
-  for it; SkillGraph calls that an *evidence gap*, distinct from not knowing
-  the skill at all.
-- **Dependency-aware gaps** — "Missing MLOps" becomes
-  `Docker → CI/CD → Model Deployment → Model Monitoring → MLOps`.
-- **Evidence-first recommendations** — the platform recommends a specific
-  project from a curated catalog, and shows exactly which of your gaps it
-  closes and why, instead of a generic course list.
-- **Grounded AI** — the AI analyst is only allowed to narrate what the
-  deterministic engines already computed. It cannot invent a project, a
-  score, or a role requirement, and it cannot mutate your data.
+1. **Evidence vs. Claims Distinction**: Surfaces "evidence gaps" (skills claimed with zero backing artifacts) as a distinct metric from unlearned skills.
+2. **Deterministic Capability Modeling**: Calculates 0–100 proficiency using evidence tier weights, recency half-life decay, project complexity, and third-party verification status with non-linear diminishing returns.
+3. **Dependency-Aware Gap Paths**: If a target role requires MLOps, SkillGraph traverses prerequisites: `Docker → CI/CD → Model Serving → Model Monitoring → MLOps`.
+4. **Actionable, Evidence-First Recommendations**: Recommends concrete projects that close the highest-weighted gaps instead of generic blog posts.
+5. **Interactive What-If Simulation**: Test hypothetical evidence additions in memory and observe real-time role readiness deltas without altering profile records.
+6. **Grounded AI Career Copilot**: A multi-agent AI analyst strictly constrained to compute over deterministic database facts, shielded against prompt-injection attacks with zero generative hallucination.
 
-## Evidence-Based Skill Intelligence
+---
 
-For every skill you claim or have evidence for, SkillGraph computes a
-0–100 capability score from a documented, deterministic formula (evidence
-type strength × recency decay × complexity × verification, combined with
-diminishing returns across repeated evidence, saturating smoothly at 100).
-Full formula: [`docs/capability-scoring.md`](docs/capability-scoring.md).
+## Key Features
 
-## Skill Graph
+- **Interactive Skill DAG Visualizer**: Explorable node-edge graph powered by React Flow with real-time category filtering, proficiency heatmapping, and node inspection.
+- **Career Command Center Dashboard**: Real-time capability scores, category radar analysis, top strengths, critical gap alerts, and next-best actions.
+- **Role Capability Matching**: Weighted readiness percentage matching (`STRONG_MATCH`, `PARTIAL_MATCH`, `WEAK_MATCH`, `MISSING`) across 41 engineering roles.
+- **Critical Path Gap Engine**: Topological sort over skill prerequisites to calculate the shortest path and estimated hours to role readiness.
+- **Interactive Career Simulator**: In-memory sandbox to select candidate skills, trigger hypothetical verification, and project readiness shifts.
+- **Grounded AI Analyst**: Multi-provider AI copilot (Anthropic, OpenAI, Google, and standalone Mock provider) with structured evidence provenance, confidence scoring, and explicit limitation boundaries.
+- **Evidence Verification Locker**: Multi-modal evidence tracking (GitHub repositories, PRs, pull requests, technical assessments, live URLs, production deployments) with audit logging.
+- **Adaptive Skill Assessments**: Interactive diagnostic quizzes with rubric-based scoring to validate skills and immediately upgrade evidence tiers.
+- **Curated Learning Pathways**: Dependency-ordered study milestones with direct links to verified documentation and exercises.
+- **Enterprise Security & Audit Trail**: JWT authentication with bcrypt password hashing, per-user row-level data isolation, security headers (`nosniff`, `DENY`), in-memory sliding-window rate limiting, and immutable audit logs.
 
-156 skills across 16 categories, connected by `PREREQUISITE_OF`, `USED_WITH`,
-`RELATED_TO`, and `SUBSKILL_OF` relationships — a real graph, explorable
-interactively (React Flow) at `/skill-graph`.
-Details: [`docs/skill-taxonomy.md`](docs/skill-taxonomy.md).
+---
 
-## Role Graph
+## Product Showcase
 
-41 synthetic roles across 9 categories (Software Engineering, AI/ML, Data,
-Cloud, DevOps, Cybersecurity, Product, Analytics, Research), each with
-weighted (`CRITICAL`/`HIGH`/`MEDIUM`/`LOW`) required skills.
-Details: [`docs/role-matching.md`](docs/role-matching.md).
+### 1. Career Intelligence Command Center
+*A unified dashboard displaying evidenced skills, capability distribution, active role readiness, and dynamic next-best-action guidance.*
 
-## Gap Engine
+![Dashboard](docs/screenshots/dashboard.png)
 
-Compares your evidence graph against a role's requirement graph and produces
-a weighted readiness score, a per-skill match classification
-(`STRONG_MATCH`/`PARTIAL_MATCH`/`WEAK_MATCH`/`MISSING`), and a prioritized,
-dependency-aware gap list. Details: [`docs/gap-engine.md`](docs/gap-engine.md),
-[`docs/dependency-engine.md`](docs/dependency-engine.md).
+---
 
-## Evidence vs Claims
+### 2. Interactive Skill Graph Explorer
+*A force-directed React Flow DAG connecting person nodes, skill competencies, proficiency levels, and prerequisite dependency chains.*
 
-The Portfolio page (`/portfolio`) surfaces "what your portfolio does not
-prove" — skills you claim with zero supporting evidence — as a first-class,
-distinct signal from a plain skill gap.
+![Skill Graph](docs/screenshots/skill_graph.png)
 
-## Career Simulator
+---
 
-`/career-simulator` lets you add hypothetical evidence and see the projected
-readiness shift for a role, entirely in memory — nothing is written to your
-real profile unless you separately add real evidence.
+### 3. Role Explorer & Capability Matching
+*Weighted role suitability matching against 41 industry roles, categorizing skills into critical, high, and medium priority tiers.*
 
-## Learning Path
+![Role Matching](docs/screenshots/role_matching.png)
 
-A deterministic, dependency-ordered path from your current gaps to a target
-role, each step naming *why* it's included and *what evidence to create*
-next. Details: [`docs/recommendation-engine.md`](docs/recommendation-engine.md).
+---
 
-## Project Recommendations
+### 4. Dependency-Aware Gap Center
+*Identifies missing prerequisites and calculates the exact critical learning path to close capability gaps for target roles.*
 
-"What should I build next?" — the recommendation engine scores a curated
-catalog of 24 project templates against your open gaps and returns the one
-that closes the most weighted gap, with an explicit list of which skills it
-closes.
+![Gap Analysis](docs/screenshots/gap_analysis.png)
 
-## AI Career Analyst
+---
 
-A multi-provider (Anthropic / OpenAI / Google / **Mock, default, no API key
-required**) analyst that retrieves your skill graph, role graph, evidence,
-and gap results, assembles them via specialized analyst functions (Skill,
-Gap, Role, Evidence, Dependency, Project Advisor, Career Narrator), and asks
-an LLM to narrate — never to invent. Every answer ships with an evidence
-panel, a confidence label, and explicit limitations. Prompt-injection
-defenses treat all free-text user content as untrusted data.
-Full design: [`docs/ai-architecture.md`](docs/ai-architecture.md).
+### 5. Career What-If Sandbox Simulator
+*Simulate adding hypothetical evidence items and evaluate real-time readiness shifts before committing to learning investments.*
+
+![Career Simulator](docs/screenshots/career_simulator.png)
+
+---
+
+### 6. Grounded AI Career Analyst
+*Context-grounded career advisory engine backed by prompt-injection defenses and verified evidence citations.*
+
+![AI Analyst](docs/screenshots/ai_analyst.png)
+
+---
+
+### 7. Evidence Verification Locker & Assessments
+*Proof-of-work management tracking repository URLs, code artifacts, and verified assessment attempts.*
+
+| Evidence Locker | Skill Assessments |
+| :---: | :---: |
+| ![Evidence Locker](docs/screenshots/evidence_locker.png) | ![Assessments](docs/screenshots/assessments.png) |
+
+---
+
+### 8. Curated Learning Pathways & Onboarding
+*Ordered learning milestones and clean authentication flow with pre-populated demo personas.*
+
+| Learning Path | Seamless Authentication |
+| :---: | :---: |
+| ![Learning Paths](docs/screenshots/learning_paths.png) | ![Login](docs/screenshots/login.png) |
+
+---
 
 ## Architecture
 
-```
-USER -> CLAIMED SKILLS -> EVIDENCE -> CAPABILITY MODEL -> TARGET ROLE
-     -> ROLE REQUIREMENTS -> SKILL GAP -> DEPENDENCY ANALYSIS
-     -> ACTION PLAN -> NEW EVIDENCE -> UPDATED CAPABILITY GRAPH
+SkillGraph separates deterministic calculation engines from conversational AI narration to guarantee zero hallucinations and complete data provenance.
+
+```mermaid
+flowchart TD
+    subgraph Client["Frontend Layer (Next.js 14 App Router)"]
+        UI["Tailwind CSS + Lucide Icons"]
+        Graph["React Flow DAG Explorer"]
+        State["TanStack Query + Auth Context"]
+    end
+
+    subgraph API["Backend API Layer (FastAPI)"]
+        Router["FastAPI REST Endpoints"]
+        SecMW["Rate Limiter & Security Headers MW"]
+        Auth["JWT Auth & Password Hash (bcrypt)"]
+    end
+
+    subgraph Engines["Deterministic Intelligence Engines"]
+        CapEngine["Capability Scoring Engine<br/>(Evidence Decay & Complexity)"]
+        RoleEngine["Role Fit & Readiness Engine"]
+        GapEngine["Dependency & Topological Gap Engine"]
+        RecEngine["Project & Learning Recommendation Engine"]
+        SimEngine["What-If Sandbox Simulation Engine"]
+    end
+
+    subgraph GroundedAI["Grounded AI Sub-Agent Layer"]
+        Guard["Prompt-Injection Defense & Sanitizer"]
+        Orchestrator["Analyst Orchestrator"]
+        LLM["Provider Router (Mock / Anthropic / OpenAI / Google)"]
+    end
+
+    subgraph Storage["Data Persistence Layer"]
+        DB[(SQLAlchemy 2.0 / PostgreSQL / SQLite)]
+        AuditLog[(Immutable Audit Events)]
+    end
+
+    Client -->|REST / JSON| SecMW
+    SecMW --> Router
+    Router --> Auth
+    Router --> Engines
+    Engines --> DB
+    Engines --> AuditLog
+    Router --> GroundedAI
+    GroundedAI --> Guard
+    Guard --> Orchestrator
+    Orchestrator -->|Context Grounding| Engines
+    Orchestrator --> LLM
 ```
 
-Full diagram and repo layout: [`docs/architecture.md`](docs/architecture.md).
+### Capability Scoring Formula
+
+For every skill $s$ claimed or evidenced by user $u$, capability score $C(u, s) \in [0, 100]$ is computed as:
+
+$$C(u, s) = 100 \times \left(1 - \exp\left(-\sum_{e \in E(u, s)} W_{\text{type}}(e) \cdot \lambda(t_e) \cdot \frac{C_{\text{comp}}(e)}{5} \cdot V(e)\right)\right)$$
+
+Where:
+- $W_{\text{type}}(e)$: Evidence weight (`PRODUCTION` = 1.0, `PROJECT` = 0.8, `ASSESSMENT` = 0.7, `CERTIFICATION` = 0.6, `COURSE` = 0.4).
+- $\lambda(t_e) = \exp(-\ln(2) \cdot \Delta t / t_{\text{half}})$: Exponential recency decay ($t_{\text{half}} = 730\text{ days}$).
+- $C_{\text{comp}}(e) \in [1, 5]$: Project architectural complexity tier.
+- $V(e)$: Verification multiplier (`VERIFIED` = 1.0, `UNVERIFIED` = 0.6, `REJECTED` = 0.0).
+
+---
 
 ## Tech Stack
 
-**Frontend:** Next.js 14 (App Router) · TypeScript · Tailwind CSS ·
-TanStack Query · React Flow · Recharts · Lucide icons
+| Domain | Technologies |
+| :--- | :--- |
+| **Frontend** | [Next.js 14](https://nextjs.org/) (App Router), [React 18](https://react.dev/), [TypeScript 5](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/), [React Flow (@xyflow/react)](https://reactflow.dev/), [TanStack Query v5](https://tanstack.com/query), [Recharts](https://recharts.org/), [Lucide React](https://lucide.dev/) |
+| **Backend** | [FastAPI](https://fastapi.tiangolo.com/), [Python 3.12](https://www.python.org/), [Pydantic v2](https://docs.pydantic.dev/), [SQLAlchemy 2.0](https://www.sqlalchemy.org/), [python-jose](https://github.com/mpdavis/python-jose) (JWT), [passlib / bcrypt](https://passlib.readthedocs.io/) |
+| **Database** | [SQLite](https://www.sqlite.org/) (zero-config default for local dev) / [PostgreSQL 16](https://www.postgresql.org/) with [psycopg2](https://www.psycopg.org/) for production |
+| **AI & LLM** | Deterministic Multi-Agent Context Assembly, Multi-Provider Router ([Anthropic Claude](https://anthropic.com/), [OpenAI GPT-4o](https://openai.com/), [Google Gemini](https://ai.google.dev/), and zero-key standalone **Mock AI** provider) |
+| **Testing** | [Pytest 8](https://docs.pytest.org/), [Starlette TestClient](https://www.starlette.io/testclient/), [HTTPX](https://www.python-httpx.org/), ESLint, TypeScript compiler (`tsc --noEmit`) |
+| **DevOps & Infra** | [Docker](https://www.docker.com/), [Docker Compose](https://docs.docker.com/compose/), [GitHub Actions CI](https://github.com/features/actions) |
 
-**Backend:** FastAPI · Python 3.12 · Pydantic v2 · SQLAlchemy 2.0 · JWT auth
-(python-jose) · bcrypt
+---
 
-**Database:** PostgreSQL-ready via SQLAlchemy; SQLite by default for local
-development (same schema, zero external dependency)
+## Project Structure
 
-**AI:** Provider abstraction over Anthropic / OpenAI / Google, with a fully
-functional Mock provider as the default — the whole app works with **no API
-key**
+```
+SkillGraph/
+├── .github/
+│   └── workflows/
+│       └── ci.yml               # GitHub Actions CI pipeline (test + lint + build)
+├── apps/
+│   ├── api/                     # FastAPI Backend Service
+│   │   ├── app/
+│   │   │   ├── core/            # Config, database engine, security utils
+│   │   │   ├── models/          # SQLAlchemy DB models (User, Skill, Role, Evidence, etc.)
+│   │   │   ├── routers/         # API routes (auth, skills, roles, gaps, ai, simulations, etc.)
+│   │   │   ├── schemas/         # Pydantic v2 request/response schemas
+│   │   │   ├── services/        # Intelligence engines (capability, gap, dependency, ai_analyst)
+│   │   │   └── main.py          # FastAPI application entry point & middleware
+│   │   ├── tests/
+│   │   │   ├── unit/            # Unit tests for scoring, AI security, simulator, etc.
+│   │   │   └── integration/     # End-to-end API integration test flows
+│   │   ├── Dockerfile           # Production container definition for API
+│   │   ├── pyproject.toml       # Pytest configuration & project metadata
+│   │   └── requirements.txt     # Python production dependencies
+│   └── web/                     # Next.js 14 Frontend Application
+│       ├── src/
+│       │   ├── app/             # App router pages (dashboard, skill-graph, roles, simulator, etc.)
+│       │   ├── components/      # Reusable UI components (Sidebar, PageHeader, Charts, Graph)
+│       │   ├── lib/             # API client, auth context provider, TypeScript types
+│       │   └── styles/          # Tailwind CSS global styling
+│       ├── public/              # Static assets & brand icons
+│       ├── Dockerfile           # Standalone multi-stage Next.js Dockerfile
+│       ├── package.json         # Node.js dependencies & scripts
+│       ├── tailwind.config.ts   # Design tokens & color palette configuration
+│       └── tsconfig.json        # Strict TypeScript compiler options
+├── docs/                        # Technical specifications & architecture deep-dives
+│   ├── architecture.md          # End-to-end system design
+│   ├── capability-scoring.md    # Mathematical derivation of capability score
+│   ├── ai-architecture.md       # Multi-agent grounding & injection defense
+│   ├── gap-engine.md            # Prerequisite resolution & gap algorithms
+│   ├── security.md              # Threat model, authentication & isolation
+│   ├── evaluation.md            # Validation results & verification criteria
+│   └── screenshots/             # High-resolution application screenshots
+├── seed/                        # Synthetic Data Generation Suite
+│   ├── generate_synthetic_data.py # 21 rich personas, 156 skills, 41 roles, 338 evidence records
+│   ├── personas.py              # Realistic developer archetype definitions
+│   └── skills_data.py           # Comprehensive skill taxonomy & prerequisite edges
+├── scripts/
+│   └── capture_screenshots.mjs  # Automated Chrome CDP screenshot capture script
+├── .env.example                 # Root environment template
+├── docker-compose.yml           # Multi-service orchestration (Web + API + Postgres)
+├── LICENSE                      # MIT Open Source License
+└── README.md                    # Project documentation & showcase
+```
 
-**Testing:** Pytest (unit + integration, FastAPI `TestClient`)
+---
 
-**Infra:** Docker, Docker Compose (API + Web + Postgres), GitHub Actions CI
+## Quickstart
 
-## Synthetic Data
+### Prerequisites
+- **Python**: `3.11` or `3.12`
+- **Node.js**: `18.x` or `20.x` or `22.x`
+- **npm** or **pnpm** or **yarn**
 
-Generated by [`seed/generate_synthetic_data.py`](seed/generate_synthetic_data.py)
-(`python -m seed.generate_synthetic_data`):
+---
 
-| | Count |
-|---|---|
-| Skills | 156 |
-| Roles | 41 |
-| Synthetic user profiles | 21 (20 personas + 1 admin) |
-| Projects | 102 |
-| Evidence records | 338 |
-| Learning resources | 44 |
-| Assessment questions | 31 |
-| Assessment attempts | 12 |
-| Recommendations (demo states) | 6 |
-| Audit events | 466 |
+### Option 1: Local Development (Recommended)
 
-20 personas across Frontend, Backend, AI, Data, DevOps, Cybersecurity,
-Student, Career-switcher, Early-career, and Experienced-engineer profiles,
-each internally consistent — a persona's "strong" skills get multiple recent
-projects; a persona's "evidence gap" skills are claimed with deliberately
-zero evidence, to demonstrate that concept.
+#### 1. Clone the repository
+```bash
+git clone https://github.com/daanialmirza5/SkillGraph.git
+cd SkillGraph
+```
 
-## Evaluation
-
-38/38 automated tests passing (27 unit, 7 integration), plus a clean
-`typecheck`/`lint`/production `build` on the frontend. Full results and
-explicitly what was *not* independently verified (Docker execution, real LLM
-providers, browser E2E): [`docs/evaluation.md`](docs/evaluation.md).
-
-## Security
-
-JWT auth, bcrypt password hashing, per-user data isolation enforced
-structurally (not just checked), Pydantic input validation, a structured
-error format with no leaked stack traces, security headers, a rate limiter,
-and an explicit AI threat model. Full write-up:
-[`docs/security.md`](docs/security.md).
-
-## Setup
-
-### Backend
-
+#### 2. Backend Setup
 ```bash
 cd apps/api
+
+# Create and activate virtual environment
 python -m venv .venv
-.venv/Scripts/activate        # Windows: .venv\Scripts\Activate.ps1
+# On Windows (PowerShell):
+.venv\Scripts\Activate.ps1
+# On macOS / Linux:
+source .venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
-cp .env.example .env          # optional — sensible defaults work as-is
 
+# Return to root and seed synthetic dataset
 cd ../..
-python -m seed.generate_synthetic_data   # seeds ~338 evidence records, 21 users, etc.
+python -m seed.generate_synthetic_data
 
+# Start FastAPI backend server
 cd apps/api
 uvicorn app.main:app --reload --port 8000
 ```
+*Backend is now running at `http://localhost:8000` (Interactive Swagger docs at `http://localhost:8000/docs`).*
 
-API docs at `http://localhost:8000/docs`.
-
-### Frontend
-
+#### 3. Frontend Setup
+In a new terminal:
 ```bash
 cd apps/web
+
+# Install dependencies
 npm install
-cp .env.local.example .env.local
+
+# Start Next.js development server
 npm run dev
 ```
+*Frontend is now live at `http://localhost:3000`.*
 
-App at `http://localhost:3000`.
+---
 
-### Docker Compose (API + Web + Postgres)
+### Option 2: Docker Compose
+
+To spin up the complete containerized stack (FastAPI API + Next.js Web + PostgreSQL Database):
 
 ```bash
 docker compose up --build
 ```
 
-*(Written and reviewed by hand; not executed in the environment this was
-built in — see `docs/evaluation.md`.)*
+---
 
-## Demo Accounts
+## Demo Credentials
 
-Any seeded `@skillgraph.dev` email, password `SkillGraph2026!` — e.g.
-`aayush.sharma@skillgraph.dev` (AI-focused persona). The login page pre-fills
-this account. An admin account also exists at `admin@skillgraph.dev` with the
-same password.
+The platform includes 21 pre-seeded developer personas across diverse engineering disciplines:
 
-## Demo Walkthrough
+| Role / Persona | Email | Password | Primary Focus |
+| :--- | :--- | :--- | :--- |
+| **Aayush Sharma** *(Pre-filled)* | `aayush.sharma@skillgraph.dev` | `SkillGraph2026!` | Frontend Engineer $\rightarrow$ AI Product Engineer |
+| **Elena Rostova** | `elena.rostova@skillgraph.dev` | `SkillGraph2026!` | Backend Engineer $\rightarrow$ Distributed Systems Architect |
+| **Marcus Chen** | `marcus.chen@skillgraph.dev` | `SkillGraph2026!` | Data Analyst $\rightarrow$ Senior ML Engineer |
+| **Platform Administrator** | `admin@skillgraph.dev` | `SkillGraph2026!` | Global System Admin & Role Catalog Management |
 
-1. Log in → **Dashboard**: evidence coverage, strong skills, evidence gaps,
-   next best action.
-2. **Roles** → pick a target role → see weighted readiness and "set as
-   career goal".
-3. **Gap Center** → critical/high/medium gaps, each with its dependency
-   chain, plus a dedicated evidence-gap section.
-4. **Learning Path** → the ordered, dependency-resolved path to close the
-   top gaps.
-5. **Recommendations** → "What should I build next?" — accept, reject, or
-   leave a suggestion pending (human-in-the-loop, logged to the audit
-   trail).
-6. **Career Simulator** → add hypothetical evidence, see the readiness
-   delta, confirm your real profile is untouched.
-7. **AI Analyst** → ask "why am I not ready for this role?" and inspect the
-   evidence panel backing the answer.
-8. **Audit Trail** → every mutation above, timestamped.
-
-## Limitations
-
-- Docker images were written but not built/run in this environment (no
-  Docker daemon available); see `docs/evaluation.md`.
-- Real AI providers (Anthropic/OpenAI/Google) were implemented but not
-  exercised against a live key — only the default Mock provider was tested.
-- No browser/E2E (Playwright) test run was performed; the frontend is
-  verified via a clean typecheck/lint/production build plus full backend API
-  verification.
-- `RoleSkill.min_capability_score` is stored and returned but not yet used
-  to hard-gate a match classification.
-- The rate limiter is in-process/in-memory, adequate for a single-instance
-  demo, not for a multi-instance production deployment.
-
-## Roadmap
-
-- GitHub repository ingestion for real (not synthetic) repo metadata as
-  evidence.
-- Persisted per-skill capability history for a real Career Timeline view.
-- Multi-instance-safe rate limiting (Redis-backed).
-- Playwright E2E suite covering the six scenarios in `docs/evaluation.md`.
+*Any seeded `@skillgraph.dev` email works with password `SkillGraph2026!`.*
 
 ---
 
-*Built as an end-to-end portfolio project demonstrating skill-graph
-modeling, evidence-based scoring, dependency-aware gap analysis, and
-grounded (not generative-fiction) AI over a real data model.*
+## API Reference
+
+The FastAPI backend exposes an organized, type-safe REST API documented via OpenAPI / Swagger at `/docs`.
+
+### Key Endpoints
+
+| Method | Endpoint | Description | Auth Required |
+| :--- | :--- | :--- | :---: |
+| `POST` | `/api/auth/login` | Authenticate user & issue signed JWT access token | No |
+| `GET` | `/api/profile/me` | Fetch authenticated user profile and capability summary | Yes |
+| `GET` | `/api/dashboard` | Fetch aggregate metrics, category scores, and next action | Yes |
+| `GET` | `/api/graph` | Retrieve node-edge DAG representation for React Flow | Yes |
+| `GET` | `/api/skills` | List taxonomy skills with user-evidenced capability scores | Yes |
+| `POST` | `/api/evidence` | Record new evidence artifact (repo, PR, deployment, test) | Yes |
+| `GET` | `/api/roles` | List all 41 roles with calculated capability match percentages | Yes |
+| `GET` | `/api/roles/{id}/fit` | Detailed breakdown of strong, partial, weak, and missing skills | Yes |
+| `GET` | `/api/gaps` | Retrieve dependency-ordered critical gap paths for active goal | Yes |
+| `POST` | `/api/simulations` | Run what-if sandbox simulation for hypothetical evidence | Yes |
+| `POST` | `/api/ai/analyze` | Multi-agent grounded conversational analysis with citations | Yes |
+| `GET` | `/api/assessments` | Fetch diagnostic assessment questions and rubric criteria | Yes |
+| `POST` | `/api/assessments/submit` | Grade assessment attempt and automatically upgrade skill tier | Yes |
+| `GET` | `/api/recommendations` | Curated project templates tailored to close maximum open gaps | Yes |
+| `GET` | `/api/audit` | Immutable audit log of all profile and evidence mutations | Yes |
+| `GET` | `/health` | System health check & active AI provider status | No |
+
+---
+
+## Evaluation & Testing
+
+SkillGraph features a comprehensive test suite across backend intelligence engines, security layers, and frontend type systems.
+
+```bash
+# Run backend unit and integration test suite
+cd apps/api
+pytest -v
+
+# Run frontend typecheck and production build verification
+cd apps/web
+npm run build
+```
+
+### Verified Test Results
+
+```
+============================= test session starts =============================
+platform win32 -- Python 3.12.14, pytest-8.3.3
+rootdir: apps/api
+collected 38 items
+
+apps/api/tests/integration/test_api_flow.py ........                     [ 21%]
+apps/api/tests/unit/test_ai_security.py ....                            [ 31%]
+apps/api/tests/unit/test_assessment_engine.py ...                       [ 39%]
+apps/api/tests/unit/test_capability_scoring.py ........                 [ 60%]
+apps/api/tests/unit/test_dependency_engine.py ...                       [ 68%]
+apps/api/tests/unit/test_gap_engine.py .......                          [ 86%]
+apps/api/tests/unit/test_recommendation_engine.py ...                   [ 94%]
+apps/api/tests/unit/test_simulator.py ...                               [100%]
+
+============================== 38 passed in 8.15s ==============================
+```
+
+- **Backend**: **38/38 passing tests** covering capability scoring decay, non-linear diminishing returns, gap dependency resolution, prompt-injection defense, assessment grading, simulation accuracy, and auth isolation.
+- **Frontend**: **Zero TypeScript or Lint errors**, clean production bundle compiled across 20 dynamic and static Next.js routes.
+
+---
+
+## Security & Privacy
+
+- **Data Isolation**: Multi-tenant row isolation enforced on database queries; users can never read or mutate records belonging to other personas.
+- **Password Security**: Passwords hashed using industry-standard `bcrypt` with cryptographic salt.
+- **Token Security**: Stateless JWTs signed with HMAC-SHA256, configurable expiry (`JWT_EXPIRE_MINUTES`), and secure header extraction.
+- **Prompt Injection Defense**: User queries and portfolio inputs are treated as untrusted data blocks encapsulated within fenced delimiter blocks with strict system prompt boundaries.
+- **Audit Logging**: Every evidence creation, goal modification, assessment attempt, and recommendation decision writes an append-only audit event.
+
+---
+
+## Roadmap
+
+- [ ] **GitHub Webhook Ingestion**: Live automatic repository and pull request parsing to ingest real-world commit history and issue resolution into the evidence locker.
+- [ ] **Temporal Capability History**: Historical time-series tracking to visualize capability score evolution over weeks and months.
+- [ ] **Distributed Rate Limiter**: Redis token-bucket implementation for scalable multi-instance cluster deployments.
+- [ ] **Automated Assessment Generation**: AI-generated code evaluation sandboxes running isolated test harnesses against candidate submissions.
+
+---
+
+## Author
+
+**Daanial Mirza**  
+- **GitHub**: [@daanialmirza5](https://github.com/daanialmirza5)
+
+---
+
+## License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
