@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core.database import Base  # noqa: E402
 from app.core.security import hash_password  # noqa: E402
-from app.models import Role, RoleSkill, Skill, SkillCategory, SkillRelationship, User, UserSkill, Evidence  # noqa: E402
+from app.models import Evidence, Role, RoleSkill, Skill, SkillCategory, SkillRelationship, User, UserSkill  # noqa: E402
 from app.models.enums import EvidenceType, Importance, RelationshipType, VerificationStatus  # noqa: E402
 
 

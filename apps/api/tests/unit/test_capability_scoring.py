@@ -1,9 +1,9 @@
 from datetime import date, timedelta
 
 from app.engines.capability_scoring import (
+    EvidenceInput,
     compute_capability,
     confidence_for,
-    EvidenceInput,
     level_for_score,
     recency_multiplier,
 )

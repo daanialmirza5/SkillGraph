@@ -1,3 +1,5 @@
+from datetime import date
+
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
@@ -7,7 +9,6 @@ from app.engines.assessment_engine import qualifies_as_evidence, score_attempt
 from app.models import AssessmentAttempt, AssessmentQuestion, AuditEvent, Evidence, User
 from app.models.enums import EvidenceType, VerificationStatus
 from app.schemas.schemas import AssessmentQuestionOut, AssessmentResultOut, AssessmentSubmit
-from datetime import date
 
 router = APIRouter(prefix="/api/assessments", tags=["assessments"])
 

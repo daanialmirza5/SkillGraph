@@ -7,11 +7,12 @@ data returned by the engines.
 
 from __future__ import annotations
 
+from sqlalchemy.orm import Session
+
 from app.engines.dependency_engine import get_dependency_chain_for_target
 from app.engines.gap_engine import RoleGapResult
 from app.engines.graph_service import SkillGraphEntry
 from app.engines.recommendation_engine import ProjectRecommendation
-from sqlalchemy.orm import Session
 
 
 def skill_analyst(user_graph: dict[int, SkillGraphEntry]) -> list[str]:

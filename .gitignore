@@ -23,6 +23,7 @@ build/
 .env
 .env.local
 .env.*.local
+!.env*.example
 
 # OS / editor
 .DS_Store

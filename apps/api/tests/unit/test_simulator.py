@@ -1,7 +1,6 @@
 from app.engines.simulator import HypotheticalEvidence, simulate_role_readiness
 from app.models import Evidence
 from app.models.enums import EvidenceType, VerificationStatus
-from tests.conftest import add_claimed_skill, add_evidence
 
 
 def test_simulation_does_not_persist_evidence(db_session, sample_user, sample_role, sample_skills):

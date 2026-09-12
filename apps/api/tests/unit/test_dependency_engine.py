@@ -1,6 +1,6 @@
 from app.engines.dependency_engine import get_dependency_chain_for_target
-from app.models.enums import RelationshipType
 from app.models import SkillRelationship
+from app.models.enums import RelationshipType
 
 
 def test_direct_prerequisite_chain(db_session, sample_skills):
