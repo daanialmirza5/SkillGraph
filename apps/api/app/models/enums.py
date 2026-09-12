@@ -1,0 +1,92 @@
+import enum
+
+
+class UserRole(str, enum.Enum):
+    USER = "user"
+    ADMIN = "admin"
+
+
+class RelationshipType(str, enum.Enum):
+    PARENT_OF = "PARENT_OF"
+    RELATED_TO = "RELATED_TO"
+    PREREQUISITE_OF = "PREREQUISITE_OF"
+    USED_WITH = "USED_WITH"
+    SUBSKILL_OF = "SUBSKILL_OF"
+
+
+class EvidenceType(str, enum.Enum):
+    PROJECT = "PROJECT"
+    WORK_EXPERIENCE = "WORK_EXPERIENCE"
+    INTERNSHIP = "INTERNSHIP"
+    CERTIFICATION = "CERTIFICATION"
+    COURSE = "COURSE"
+    GITHUB_REPOSITORY = "GITHUB_REPOSITORY"
+    PUBLICATION = "PUBLICATION"
+    COMPETITION = "COMPETITION"
+    PORTFOLIO = "PORTFOLIO"
+    ASSESSMENT = "ASSESSMENT"
+
+
+class VerificationStatus(str, enum.Enum):
+    UNVERIFIED = "UNVERIFIED"
+    SELF_REPORTED = "SELF_REPORTED"
+    VERIFIED = "VERIFIED"
+
+
+class Importance(str, enum.Enum):
+    CRITICAL = "CRITICAL"
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+
+
+class CapabilityLevel(str, enum.Enum):
+    FOUNDATIONAL = "FOUNDATIONAL"
+    DEVELOPING = "DEVELOPING"
+    PRACTICAL = "PRACTICAL"
+    STRONG = "STRONG"
+    EXPERT_LIKE = "EXPERT-LIKE"
+
+
+class ConfidenceLevel(str, enum.Enum):
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+
+
+class MatchLevel(str, enum.Enum):
+    STRONG_MATCH = "STRONG_MATCH"
+    PARTIAL_MATCH = "PARTIAL_MATCH"
+    WEAK_MATCH = "WEAK_MATCH"
+    MISSING = "MISSING"
+
+
+class RecommendationType(str, enum.Enum):
+    PROJECT = "PROJECT"
+    LEARNING = "LEARNING"
+    ASSESSMENT = "ASSESSMENT"
+
+
+class RecommendationStatus(str, enum.Enum):
+    SUGGESTED = "SUGGESTED"
+    ACCEPTED = "ACCEPTED"
+    EDITED = "EDITED"
+    REJECTED = "REJECTED"
+
+
+class LearningResourceType(str, enum.Enum):
+    COURSE = "COURSE"
+    PROJECT = "PROJECT"
+    DOC = "DOC"
+    BOOK = "BOOK"
+
+
+class AuditAction(str, enum.Enum):
+    SKILL_ADDED = "SKILL_ADDED"
+    EVIDENCE_ADDED = "EVIDENCE_ADDED"
+    PROJECT_CREATED = "PROJECT_CREATED"
+    ROLE_SELECTED = "ROLE_SELECTED"
+    ASSESSMENT_COMPLETED = "ASSESSMENT_COMPLETED"
+    RECOMMENDATION_ACCEPTED = "RECOMMENDATION_ACCEPTED"
+    RECOMMENDATION_REJECTED = "RECOMMENDATION_REJECTED"
+    PROFILE_UPDATED = "PROFILE_UPDATED"
