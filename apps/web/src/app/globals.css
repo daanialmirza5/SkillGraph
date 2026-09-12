@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: #f7f8fb;
+  color: #111827;
+}
+
+.card {
+  @apply rounded-xl border border-ink-200 bg-white shadow-sm;
+}
+
+.badge {
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+}
+
+.badge-strong {
+  @apply bg-emerald-100 text-emerald-800;
+}
+
+.badge-partial {
+  @apply bg-amber-100 text-amber-800;
+}
+
+.badge-weak {
+  @apply bg-orange-100 text-orange-800;
+}
+
+.badge-missing {
+  @apply bg-rose-100 text-rose-800;
+}
+
+.badge-neutral {
+  @apply bg-ink-100 text-ink-700;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-brand-500 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg border border-ink-200 bg-white px-4 py-2 text-sm font-medium text-ink-800 transition hover:bg-ink-50 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.progress-track {
+  @apply h-2 w-full overflow-hidden rounded-full bg-ink-100;
+}
+
+.progress-fill {
+  @apply h-full rounded-full bg-brand-500 transition-all;
+}
