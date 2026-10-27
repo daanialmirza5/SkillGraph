@@ -1,7 +1,6 @@
 # SkillGraph — Technical Debt & Architectural Audit
 
 **Repository**: `SkillGraph`  
-**Status**: Tier 1 Flagship (38 passing tests)
 
 ## Prioritized Debt Items
 - **[P1 — High] Async Task Queue for Heavy Artifact Ingestion**: Parsing large external repositories runs synchronously in request lifecycles. Should be moved to Celery/ARQ with Redis.
