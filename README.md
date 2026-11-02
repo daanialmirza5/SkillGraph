@@ -199,7 +199,7 @@ Where:
 | Domain | Technologies |
 | :--- | :--- |
 | **Frontend** | [Next.js 14](https://nextjs.org/) (App Router), [React 18](https://react.dev/), [TypeScript 5](https://www.typescriptlang.org/), [Tailwind CSS](https://tailwindcss.com/), [React Flow (@xyflow/react)](https://reactflow.dev/), [TanStack Query v5](https://tanstack.com/query), [Recharts](https://recharts.org/), [Lucide React](https://lucide.dev/) |
-| **Backend** | [FastAPI](https://fastapi.tiangolo.com/), [Python 3.12](https://www.python.org/), [Pydantic v2](https://docs.pydantic.dev/), [SQLAlchemy 2.0](https://www.sqlalchemy.org/), [python-jose](https://github.com/mpdavis/python-jose) (JWT), [passlib / bcrypt](https://passlib.readthedocs.io/) |
+| **Backend** | [FastAPI](https://fastapi.tiangolo.com/), [Python 3.12](https://www.python.org/), [Pydantic v2](https://docs.pydantic.dev/), [SQLAlchemy 2.0](https://www.sqlalchemy.org/), [PyJWT](https://pyjwt.readthedocs.io/) (JWT), [passlib / bcrypt](https://passlib.readthedocs.io/) |
 | **Database** | [SQLite](https://www.sqlite.org/) (zero-config default for local dev) / [PostgreSQL 16](https://www.postgresql.org/) with [psycopg2](https://www.psycopg.org/) for production |
 | **AI & LLM** | Deterministic Multi-Agent Context Assembly, Multi-Provider Router ([Anthropic Claude](https://anthropic.com/), [OpenAI GPT-4o](https://openai.com/), [Google Gemini](https://ai.google.dev/), and zero-key standalone **Mock AI** provider) |
 | **Testing** | [Pytest 8](https://docs.pytest.org/), [Starlette TestClient](https://www.starlette.io/testclient/), [HTTPX](https://www.python-httpx.org/), ESLint, TypeScript compiler (`tsc --noEmit`) |

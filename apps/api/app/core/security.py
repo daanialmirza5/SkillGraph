@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
 import bcrypt
-from jose import JWTError, jwt
+import jwt
 
 from app.core.config import get_settings
 
@@ -27,5 +27,5 @@ def create_access_token(subject: str, extra_claims: dict | None = None) -> str:
 def decode_access_token(token: str) -> dict | None:
     try:
         return jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
-    except JWTError:
+    except jwt.PyJWTError:
         return None

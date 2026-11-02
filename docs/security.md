@@ -2,7 +2,7 @@
 
 ## Authentication & authorization
 
-- JWT bearer tokens (`python-jose`, HS256), issued on `/api/auth/login` and
+- JWT bearer tokens (`PyJWT`, HS256), issued on `/api/auth/login` and
   `/api/auth/register`, expiring after `JWT_EXPIRE_MINUTES` (default 12h).
 - Passwords hashed with `bcrypt` directly (12-round default salt), truncated
   to 72 bytes per bcrypt's own limit before hashing — never stored or logged
