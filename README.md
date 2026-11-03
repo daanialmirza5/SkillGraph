@@ -430,7 +430,7 @@ apps/api/tests/unit/test_simulator.py ...                               [100%]
 
 ## Author
 
-**Daanial Mirza**  
+**Daanial Baig**  
 - **GitHub**: [@daanialmirza5](https://github.com/daanialmirza5)
 
 ---
